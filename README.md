@@ -55,7 +55,6 @@ docker start webgoat
 
 This way, you can start where you left off. If you remove the container, you need to use `docker run` again.
 
-
 **Important**: *Choose the correct timezone, so that the docker container and your host are in the same timezone. As it is important for the validity of JWT tokens used in certain exercises.*
 
 ## 2. Standalone
