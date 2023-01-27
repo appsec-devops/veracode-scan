@@ -1,33 +1,27 @@
-on: 
-  push:
-    paths-ignore:
-      - "README.md"
-      - "**.json"
-      - "action.yml"
-  #schedule:
-  #  - cron: 15 14 * * 6
-  workflow_dispatch:
-
-jobs:
-  veracode-sca-task:
-    runs-on: ubuntu-latest
-    name: Test repository for Issues
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Run Veracode SCA
-        env:
-          SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-        uses: ./
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          quick: true
-          #url: "https://www.github.com/dancancro/great-big-example-application"
-          #url: "https://github.com/Lerer/serverless-veracode-webhooks"
-          create-issues: true 
-          #allow-dirty: false
-          #recursive: true
-          fail-on-cvss: 1
-          min-cvss-for-issue: 1
-          debug: false
+- name: Veracode Dependency Scanning
+  # You may pin to the exact commit or the version.
+  # uses: veracode/veracode-sca@9ab4d631fc9a0f14e1f9322c0d61bea90e924de1
+  uses: veracode/veracode-sca@v2.0.65
+  with:
+    # Authorization token to query and create issues
+    github_token: # default is ${{ github.token }}
+    # Run the SRCCLR with the `--quick` options
+    quick: # optional, default is false
+    # Show update advisor
+    update_advisor: # optional, default is false
+    # A git URL to work with in case the scan is not for the current repository
+    url: # optional, default is 
+    # An attribute to instruct the action to create an issue from found vulnerability or just simple text output
+    create-issues: # optional, default is false
+    # A path within the repository where the build definition starts
+    path: # optional, default is .
+    # Run the SRCCLR in debug mode
+    debug: # optional, default is false
+    # Run the SRCCLR with the `--skip-collectors` options
+    skip-collectors: # optional, default is false
+    # Run the SRCCLR with the `--allow-dirty` option
+    allow-dirty: # optional, default is false
+    # Run the SRCCLR with the `--recursive` option
+    recursive: # optional, default is false
+    # Run the SRCCLR with the `--skip-vms` option
+    skip-vms: # optional, default is false
